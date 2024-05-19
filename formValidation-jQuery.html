@@ -1,0 +1,165 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <title>Title</title>
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <link rel="stylesheet" href="bootstrap-4.6.2-dist/css/bootstrap.min.css">
+    <script src="jQuery/jquery-3.7.1.min.js"></script>
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+</head>
+  <body>
+    <div class="container">
+        <div class="form-group">
+            <div class="row">
+                <div class="col">
+                    <label for="">Name</label>
+                    <input type="text" name="" id="uname" class="form-control " placeholder="" aria-describedby="helpId">
+                    <small id="helpId" class="text-muted"></small>
+                    <label for="">Password</label>
+                    <input type="text" name="" id="upass" class="form-control " placeholder="" aria-describedby="helpId">
+                    <small id="helpId" class="text-muted"></small>
+                </div>
+            
+                <div class="col">
+                
+                    <label for="">Email</label>
+                    <input type="text" name="" id="uemail" class="form-control " placeholder="" aria-describedby="helpId">
+                    <small id="helpId" class="text-muted"></small>
+                    <label for="">Confirm Password</label>
+                    <input type="text" name="" id="ucpass" class="form-control " placeholder="" aria-describedby="helpId">
+                    <small id="helpId" class="text-muted"></small>
+                
+                </div>
+            
+            </div>
+                <button id="btnsubmit" class="btn btn-info ">Submit</button>
+        </div>
+    </div>
+      
+    <!-- Optional JavaScript -->
+    <!-- jQuery first, then Popper.js, then Bootstrap JS -->
+    </body>
+
+    <script>
+        $(document).ready(function () {
+            
+                $("#uname").keyup(function(){
+                    let usname = $(this).val();
+                    let usnameRE = /^[a-zA-Z\s]{3,}$/;
+                    // console.log(usname);
+                    if(!usnameRE.test(usname)){
+                        $(this).css('border','2px solid red');
+                        $(this).next("small").show().text("Please follow the formate").css('color','red');
+                    }
+                    else{
+                        $(this).css('border','2px solid green');
+                        $(this).next("small").hide();
+                    }
+
+
+                })
+
+                $("#uemail").keyup(function(){
+                    let umail = $(this).val();
+                    let umailRE = /^[a-zA-Z\s_.]{5,15}@[a-z]{5,6}.[a-z]{3,5}$/;
+                    // console.log(usname);
+                    if(!umailRE.test(umail)){
+                        $(this).css('border','2px solid red');
+                        $(this).next("small").show().text("Please follow the formate").css('color','red');
+                    }
+                    else{
+                        $(this).css('border','2px solid green');
+                        $(this).next("small").hide();
+                    }
+                })
+
+                $("#upass").keyup(function(){
+                    let upass = $(this).val();
+                    let upassRE = /^(?=.*[A-Z])(?=.*[a-z])(?=.*[!@#$&*])(?=.*\d)[a-zA-Z\d_@]{8,}$/;
+                    // console.log(usname);
+                    if(!upassRE.test(upass)){
+                        $(this).css('border','2px solid red');
+                        $(this).next("small").show().text("Please follow the formate").css('color','red');
+                    }
+                    else{
+                        $(this).css('border','2px solid green');
+                        $(this).next("small").hide();
+                    }
+                })
+                $("#ucpass").keyup(function(){
+                    let upass = $("#upass").val();
+                    let ucpass = $(this).val();
+                    // let upassRE = /^(?=.*[A-Z])(?=.*[a-z])(?=.*[!@#$&*])(?=.*\d)[a-zA-Z\d_@]{8,}$/;
+                    // console.log(usname);
+                    if(ucpass!=upass){
+                        $(this).css('border','2px solid red');
+                        $(this).next("small").show().text("Password Not Match").css('color','red');
+                    }
+                    else{
+                        $(this).css('border','2px solid green');
+                        $(this).next("small").show().text("Password Matched").css('color','green');
+                        // $(this).next("small").show().text("Password Matched");
+                    }
+                })
+
+                
+            })
+
+            function emptyfield(inpdata){
+                if($(inpdata).val()==""){
+                    $(inpdata).css('border','2px solid red');
+                    $(inpdata).next('small').show().text("Please fill this filed").css('color','red');
+                }
+
+            }
+
+
+            let abc = JSON.parse(localStorage.getItem('Objdata')) || [];
+             $("#btnsubmit").click(function(){
+                let name =  $("#uname").val();
+                let umail = $("#uemail").val();
+                let upass = $("#upass").val();
+                let ucpass = $("#ucpass").val();
+                emptyfield('#uname');
+                emptyfield('#uemail');
+                emptyfield('#upass');
+                emptyfield('#ucpass');
+
+                let usnameRE = /^[a-zA-Z\s]{3,}$/;
+                let umailRE = /^[a-zA-Z\s_.]{5,}@[a-z]{5,}.[a-z]{3,5}$/;
+                let upassRE = /^(?=.*[A-Z])(?=.*[a-z])(?=.*[!@#$&*])(?=.*\d)[a-zA-Z\d_@]{8,}$/;
+
+                let matchemail = abc.some(user => user.Email==umail);
+                if(usnameRE.test(name) && umailRE.test(umail) && upassRE.test(upass) ){
+                    if(upass==ucpass){
+                        if(matchemail){
+                            alert("This Email id is Already Exist")
+
+                        }
+                        else{
+                            abc.push({"Stdname": name, "Email":umail, "Password":upass});
+                            localStorage.setItem("Objdata", JSON.stringify(abc));
+                            alert("Password Updated Successfully");
+                            $('input').val('');
+                            $('input').css('border','');
+                            window.location.assign("File1.html");
+
+                        }
+                       
+                    }
+                    else{
+                        alert("Password Not Matched")
+                    }
+
+                }
+                else{
+                    alert("Invalid Formate")
+                }
+            })
+        
+    </script>
+    
+    <script src="bootstrap-4.6.2-dist/js/bootstrap.min.js"></script>
+ 
+</html>

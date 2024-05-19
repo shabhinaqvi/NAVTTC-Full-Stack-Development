@@ -1,0 +1,61 @@
+﻿-- Q1: There is an upcoming picnic for women. Write a query that returns all the female staff
+
+	SELECT * FROM students WHERE gender = "female"
+
+-- Q2(a): write a query which returns the 3 most earning employees.
+
+	SELECT * FROM `students` ORDER by `salary` DESC limit 3	(Not Working)
+
+-- Q2(b): write a query which returns the 2 most earning female employees.
+
+	SELECT * FROM `students` WHERE gender = "female" ORDER by `salary` LIMIT 2 (Not Working)
+
+-- Q3(a): Congratulations 🎉 Your company has made a profit. 
+-- Write a query that increases every employee's salary by 2500
+
+	UPDATE students SET salary = salary + 2500
+
+-- Q5: A van service has been started by the company for female staff 
+-- living in gulshan-e-Iqbal 13-E or Gulshan-e-Hadid
+-- Write a query that returns a result set that meets the above requirement
+
+	 SELECT * FROM `students` WHERE gender = "female" AND (address = "gulshan e Iqbal" or address = "gulshan e hadeed")
+
+-- Q6: Write a query that increases the salary of all employees by 1000 except employees from management.
+
+	 UPDATE students SET salary = salary + 1000 WHERE department != "management"
+
+
+
+
+
+/* CREATE TABLE faculties(
+id int PRIMARY KEY AUTO_INCREMENT,
+name varchar(100) 	NOT NULL,
+email varchar(200) UNIQUE 
+
+)*/
+-- DDL
+-- ALTER TABLE faculties ADD COLUMN age int
+
+-- DML
+/* INSERT INTO faculties (name , email , age) VALUES ('aqsa','aqsa@gmail.com',23),
+('asim','asim@gmail.com',24),
+('huzaifa','huzaifa@gmail.com',25) 
+*/
+-- SELECT * FROM faculties
+-- UPDATE faculties SET name = 'aqsa khan'  WHERE id = 1  
+-- UPDATE faculties SET name = 'aqsa khan'  WHERE id = 1  
+ 
+-- ALTER TABLE faculties ADD COLUMN salary int
+-- UPDATE faculties SET salary = 95000
+-- UPDATE faculties SET salary = salary + 5000 WHERE id = 3
+
+-- UPDATE faculties SET salary = salary + 5000 WHERE id = 3
+ 
+ -- UPDATE students SET stdAge = stdAge + 2 WHERE id = 1 OR id = 3
+--  UPDATE students SET stdAge = stdAge + 1 WHERE id = 1 AND id = 3
+ 
+ SELECT * FROM students ORDER BY name LIMIT 3
+ 
+ 
